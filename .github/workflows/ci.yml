@@ -6,8 +6,8 @@ on:
       - main
 
   push:
-  branches:
-    - main
+   branches:
+     - main
 
 jobs:
   test:
