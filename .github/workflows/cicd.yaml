@@ -55,7 +55,26 @@ jobs:
           docker build \
             -t nikitamishra/flask_image:latest \
             -f app/dockerfile app
+      
+      - name: Start test container
+        run: |
+          docker run -d \
+            --name test_app \
+            -p 5000:5000 \
+            nikitamishra/flask_image:latest
 
+          sleep 5
+
+      - name: Install test dependencies
+        run: pip install -r app/requirement.txt
+
+      - name: Run integration tests
+        run: pytest app/tests/test_integration.py
+
+      - name: Stop test container
+        if: always()
+        run: docker rm -f test_app || true
+      
       - name: Docker vulnerability scan
         uses: aquasecurity/trivy-action@master
         with:
@@ -127,4 +146,33 @@ jobs:
             sleep 5
 
             curl -f http://localhost:5000
+  notify:
+    if: failure()
+    needs:
+      - test
+      - build
+      - staging
+      - production
+    runs-on: ubuntu-latest
 
+    steps:
+      - name: Send failure email
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{ secrets.MAIL_USERNAME }}
+          password: ${{ secrets.MAIL_PASSWORD }}
+          subject: "CI/CD Pipeline Failed"
+          to: ${{ secrets.MAIL_USERNAME }}
+          from: GitHub Actions
+          secure: true
+          body: |
+            CI/CD pipeline failed.
+
+            Repository: ${{ github.repository }}
+            Branch: ${{ github.ref_name }}
+            Commit: ${{ github.sha }}
+
+            Check the failed workflow:
+            ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
