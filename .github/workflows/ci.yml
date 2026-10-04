@@ -68,7 +68,7 @@ jobs:
       - name: Push Docker image
         run: docker push nikitamishra/flask_image:latest
 
-    deploy:
+  deploy:
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     needs: docker
     runs-on: ubuntu-latest
@@ -89,7 +89,7 @@ jobs:
             docker run -d \
               --name flask_app \
               -p 5000:5000 \
-              nikitamishra/flask_app:latest
+              nikitamishra/flask_image:latest
 
             sleep 5
 
