@@ -147,32 +147,52 @@ jobs:
 
             curl -f http://localhost:5000
   notify:
-    if: failure()
+    if: always()
+
     needs:
       - test
       - build
       - staging
       - production
+
     runs-on: ubuntu-latest
 
     steps:
-      - name: Send failure email
+
+      - name: Send email notification
         uses: dawidd6/action-send-mail@v3
+
         with:
           server_address: smtp.gmail.com
           server_port: 465
+
           username: ${{ secrets.MAIL_USERNAME }}
           password: ${{ secrets.MAIL_PASSWORD }}
-          subject: "CI/CD Pipeline Failed"
-          to: ${{ secrets.MAIL_USERNAME }}
+
           from: GitHub Actions
+          to: ${{ secrets.MAIL_USERNAME }}
+
           secure: true
+
+          subject: "CI/CD Pipeline Notification"
+
           body: |
-            CI/CD pipeline failed.
+            CI/CD Pipeline Notification
 
             Repository: ${{ github.repository }}
+
             Branch: ${{ github.ref_name }}
+
             Commit: ${{ github.sha }}
 
-            Check the failed workflow:
+            --------------------------------
+
+            Test:       ${{ needs.test.result }}
+            Build:      ${{ needs.build.result }}
+            Staging:    ${{ needs.staging.result }}
+            Production: ${{ needs.production.result }}
+
+            --------------------------------
+
+            Workflow:
             ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
