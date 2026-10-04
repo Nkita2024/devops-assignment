@@ -23,3 +23,9 @@ crash.*.log
 .DS_Store
 *.swp
 *.swo
+
+# Python
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
