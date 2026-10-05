@@ -1,6 +1,6 @@
 # DevOps Assignment – Infrastructure Provisioning, Deployment Automation, Monitoring and Logging 
 
-## 1. Project Overview
+## 1. Project Overview                                                                                                                                        
 
 This project demonstrates a complete DevOps setup for a small Flask web application.
 
@@ -22,7 +22,7 @@ The project also includes CloudWatch monitoring and centralized logging.
 * Trivy
 * Pytest
 
-------------------------------------------------
+---------------------------------------------------------------------------------------------------------
 
 ## 2. Architecture Diagram
 
@@ -36,15 +36,15 @@ GitHub Repository
    v
 GitHub Actions
    |
-   +--> Unit Tests
+    Unit Tests
    |
-   +--> Dependency Scan
+    Dependency Scan
    |
-   +--> Docker Build
+    Docker Build
    |
-   +--> Integration Test
+    Integration Test
    |
-   +--> Trivy Security Scan
+    Trivy Security Scan
    |
    v
 Docker Hub
@@ -57,13 +57,13 @@ EC2 Instance
    |
    v
 RDS PostgreSQL
-```
+
 
 Monitoring and logging are handled using Amazon CloudWatch.
 
 ALB access logs are stored in Amazon S3.
 
----
+----------------------------------------------------------------------------------------------------------------------
 
 ## 3. Infrastructure Provisioning
 
@@ -94,7 +94,7 @@ After deployment, the important resource information can be viewed using:
 
 terraform output
 
--------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------
 
 ## 4. Application
 
@@ -104,7 +104,7 @@ A simple health check is available to verify that the application is running.
 
 Example:
 
-curl http://localhost:5000/
+http://demo-alb-995554105.ap-south-1.elb.amazonaws.com
 
 Expected response:
 
@@ -113,7 +113,7 @@ Expected response:
   "status": "running"
 }
 
---------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------
 
 ## 5. Docker
 
@@ -129,7 +129,7 @@ docker run -d --name flask_app -p 5000:5000 nikitamishra/flask_image:latest
 
 The Docker image is pushed to Docker Hub by the CI/CD pipeline.
 
-----------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------
 
 ## 6. CI/CD Pipeline
 
@@ -190,7 +190,7 @@ This prevents an automatic production deployment immediately after every merge.
 
 Email notifications are configured for pipeline results so that deployment failures or successful runs can be identified quickly.
 
--------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------
 
 ## 7. Monitoring
 
@@ -221,7 +221,7 @@ It contains:
 
 These metrics help identify application traffic, errors, and performance issues.
 
---------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------
 
 ## 8. Logging
 
