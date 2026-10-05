@@ -32,17 +32,7 @@ Developer
    |
 GitHub Repository
    |
-GitHub Actions
-   >
-    Unit Tests
-   >
-    Dependency Scan
-   >
-    Docker Build
-   >
-    Integration Test
-   >
-    Trivy Security Scan
+GitHub Actions (Unit Test > Dependendency Scan > Docker Build > Integration Test > Trivy Security Scan )
    |
    Docker Hub
    |
