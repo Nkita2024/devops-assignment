@@ -30,32 +30,26 @@ The basic flow of the application is:
 
 Developer
    |
-   v
 GitHub Repository
    |
-   v
 GitHub Actions
-   |
+   >
     Unit Tests
-   |
+   >
     Dependency Scan
-   |
+   >
     Docker Build
-   |
+   >
     Integration Test
-   |
+   >
     Trivy Security Scan
    |
-   v
-Docker Hub
+   Docker Hub
    |
-   v
 AWS Load Balancer
-   |
-   v
+   | 
 EC2 Instance
    |
-   v
 RDS PostgreSQL
 
 
